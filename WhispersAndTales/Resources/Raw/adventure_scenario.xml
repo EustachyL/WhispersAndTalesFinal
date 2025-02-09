@@ -1,0 +1,367 @@
+<ResFile>
+	<!-- Definicje atrybutów -->
+	<Attributes>
+		<Attribute tag="Strength">
+			<Properties>
+				<Property name="Name" value="Siła" type="string" />
+				<Property name="Description" value="Określa fizyczną moc i zdolność do noszenia przedmiotów." type="string" />
+				<Property name="Value" value="1" type="int" />
+			</Properties>
+		</Attribute>
+		<Attribute tag="Dexterity">
+			<Properties>
+				<Property name="Name" value="Zręczność" type="string" />
+				<Property name="Description" value="Wpływa na zwinność, refleksy i równowagę." type="string" />
+				<Property name="Value" value="1" type="int" />
+			</Properties>
+		</Attribute>
+		<Attribute tag="Constitution">
+			<Properties>
+				<Property name="Name" value="Kondycja" type="string" />
+				<Property name="Description" value="Określa zdrowie i wytrzymałość." type="string" />
+				<Property name="Value" value="1" type="int" />
+			</Properties>
+		</Attribute>
+		<Attribute tag="Intelligence">
+			<Properties>
+				<Property name="Name" value="Inteligencja" type="string" />
+				<Property name="Description" value="Reprezentuje zdolności logiczne i pamięć." type="string" />
+				<Property name="Value" value="1" type="int" />
+			</Properties>
+		</Attribute>
+		<Attribute tag="Wisdom">
+			<Properties>
+				<Property name="Name" value="Mądrość" type="string" />
+				<Property name="Description" value="Odwzorowuje percepcję i intuicję." type="string" />
+				<Property name="Value" value="1" type="int" />
+			</Properties>
+		</Attribute>
+		<Attribute tag="Charisma">
+			<Properties>
+				<Property name="Name" value="Charyzma" type="string" />
+				<Property name="Description" value="Wpływa na interakcje społeczne i zdolności przywódcze." type="string" />
+				<Property name="Value" value="1" type="int" />
+			</Properties>
+		</Attribute>
+	</Attributes>
+	<!-- Definicje modyfikatorów -->
+	<Modifiers>
+	</Modifiers>	
+	<!-- Definicje akcji -->
+	<GameActions>
+		<GameAction tag="MeleeAttack" type="MeleeAttack">
+			<Properties>
+				<Property name="Description" value="Wykonaj Atak." type="string" />
+				<Property name="UsedAttributeTag" value="Strength" type="string" />
+			</Properties>
+			<Conditions>
+				<Condition type="TargetHasPropertyValue" propertyName="CanBeAttacked" value="true"/>
+			</Conditions>
+		</GameAction>
+		<GameAction tag="SwiftAttack" type="MeleeAttack">
+			<Properties>
+				<Property name="Description" value="Wykonaj Szybki Atak." type="string" />
+				<Property name="UsedAttributeTag" value="Dexterity" type="string" />
+			</Properties>
+			<Conditions>
+				<Condition type="TargetHasPropertyValue" propertyName="CanBeAttacked" value="true"/>
+			</Conditions>
+		</GameAction>
+	</GameActions>
+	<!-- Definicje wydarzeń -->
+	<Events>
+		<Event tag="FinalBattle" type="Narrate">
+			<Properties>
+				<Property name="Description" value="Zmierz się z Upiornym Strażnikiem, by zdjąć klątwę." type="string"/>
+			</Properties>
+		</Event>
+		<Event tag="Victory" type="EndScenario">
+			<Properties>
+				<Property name="Description" value="Ołtarz został zniszczony, mieszkańcy wioski dziękują ci za pomoc. Możesz teraz ruszyć na inne przygody" type="string"/>
+			</Properties>
+		</Event>
+		<Event tag="Defeat" type="EndScenario">
+			<Properties>
+				<Property name="Description" value="Poległeś, a klątwa wciąż nawiedza wioskę" type="string"/>
+			</Properties>
+		</Event>
+		<Event tag="OpenWay" type="AddConnection">
+			<Properties>
+				<Property name="FirstLocationTag" value="OldGate" type="string"/>
+				<Property name="SecondLocationTag" value="Altar" type="string"/>
+				<Property name="Direction" value="E" type="string"/>
+				<Property name="Description" value="Zebrałeś klucz, kamienne drzwi są teraz dla ciebie otwarta" type="string"/>
+			</Properties>
+		</Event>
+	</Events>
+	<!-- Definicje przedmiotów -->
+	<Items>
+		<Item tag="OldKey">
+			<Properties>
+				<Property name="Name" value="Stary klucz" type="string"/>
+				<Property name="Description" value="Zardzewiały klucz do starożytnej krypty." type="string"/>
+				<Property name="CanPickUp" value="true" type="bool"/>
+				<Property name="OnUse" value="Describe" type="string"/>
+			</Properties>
+		</Item>
+		<Item tag="SteelSword">
+			<Properties>
+				<Property name="Name" value="Stalowy Miecz" type="string"/>
+				<Property name="Description" value="Ciężki, dobrze wyważony miecz wykonany ze stali." type="string"/>
+				<Property name="CanPickUp" value="true" type="bool"/>
+				<Property name="EquipSlot" value="Weapon" type="string"/>
+				<Property name="OnUse" value="Equip" type="string"/>
+				<Property name="Damage" value="2d4" type="string"/>
+			</Properties>
+		</Item>
+		<Item tag="AbandonedShield">
+			<Properties>
+				<Property name="Name" value="Porzucona Tarcza" type="string"/>
+				<Property name="Description" value="Stara, nadgryziona zębem czasu tarcza, wciąż może coś wytrzymać." type="string"/>
+				<Property name="CanPickUp" value="true" type="bool"/>
+				<Property name="EquipSlot" value="OffHand" type="string"/>
+				<Property name="OnUse" value="Equip" type="string"/>
+			</Properties>
+		</Item>
+	</Items>
+	<!-- Definicje klas postaci-->
+	<CharacterClasses>
+		<CharacterClass tag="Warrior">
+			<Properties>
+				<Property name="Name" value="Wojownik" type="string" />
+				<Property name="Description" value="Walczący w zwarciu mistrz broni i walki." type="string" />
+				<Property name="Hitpoints" value="20" type="int" />
+				<Property name="IsPlayable" value="true" type="bool" />
+			</Properties>
+			<Inventory>
+				<Item tag="SteelSword"/>
+			</Inventory>
+			<Attributes>
+				<Attribute tag="Strength" type="fixed" value="6"/>
+				<Attribute tag="Constitution" type="fixed" value="5"/> 
+				<Attribute tag="Wisdom" type="fixed" value="1"/> 
+				<Attribute tag="Dexterity" type="fixed" value="3"/> 
+				<Attribute tag="Charisma" type="fixed" value="4"/> 
+				<Attribute tag="Charisma" type="fixed" value="4"/> 
+			</Attributes>
+			<Actions>
+					<GameAction tag="MeleeAttack"/>
+			</Actions>
+		</CharacterClass>
+		<CharacterClass tag="BaseEnemy">
+			<Properties>
+				<Property name="Name" value="wróg" type="string" />
+				<Property name="Description" value="" type="string" />
+				<Property name="Hitpoints" value="10" type="int" />
+				<Property name="IsPlayable" value="false" type="bool" />
+				<Property name="Damage" value="1d5" type="string" />
+			</Properties>
+			<Attributes>
+			</Attributes>
+		</CharacterClass>
+		<CharacterClass tag="Villager">
+			<Properties>
+				<Property name="Name" value="Mieszkaniec Wioski" type="string" />
+				<Property name="Description" value="" type="string" />
+				<Property name="Hitpoints" value="1" type="int" />
+				<Property name="IsPlayable" value="false" type="bool" />
+			</Properties>
+			<Attributes>
+			</Attributes>
+		</CharacterClass>
+	</CharacterClasses>
+	<!-- Definicje postaci -->
+	<Characters>
+		<NonPlayerCharacter tag="VillageElder">
+			<CharacterClass tag="Villager"/>
+			<Properties>
+				<Property name="Name" value="Starszy Wioski" type="string"/>
+				<Property name="Description" value="Starszy mężczyzna, który prosi o pomoc w rozwiązaniu tajemnicy." type="string"/>
+				<Property name="Behaviour" value="Neutral" type="string"/>
+				<Property name="HasDialog" value="true" type="bool"/>
+				<Property name="Dialog" value="Witaj, proszę cię o pomoc w rozwiązaniu klątwy która dopadła moją wioskę." type="string"/>
+			</Properties>
+		</NonPlayerCharacter>
+		<NonPlayerCharacter tag="Woodsman">
+			<CharacterClass tag="Villager"/>
+			<Properties>
+				<Property name="Name" value="Sołtys Edgar" type="string"/>
+				<Property name="Description" value="Starszy mężczyzna" type="string"/>
+				<Property name="Behaviour" value="Neutral" type="string"/>
+			</Properties>
+		</NonPlayerCharacter>
+		<NonPlayerCharacter tag="GhostGuardian">
+			<CharacterClass tag="BaseEnemy"/>
+			<Properties>
+				<Property name="Name" value="Upiorny Strażnik" type="string"/>
+				<Property name="Description" value="Pradawny duch strzegący tajemnicy krypty." type="string"/>
+				<Property name="Behaviour" value="Hostile" type="string"/>
+				<Property name="Hitpoints" value="20" type="int" />
+				<Property name="Damage" value="2d5" type="string" />
+				<Property name="OnDeath" value="Victory" type="string"/>
+			</Properties>
+		</NonPlayerCharacter>
+		<NonPlayerCharacter tag="Wolf">
+			<CharacterClass tag="BaseEnemy"/>
+			<Properties>
+				<Property name="Name" value="Wilk" type="string"/>
+				<Property name="Description" value="Wilk" type="string"/>
+				<Property name="Behaviour" value="Hostile" type="string"/>
+				<Property name="Damage" value="1d3" type="string" />
+			</Properties>
+		</NonPlayerCharacter>
+		<NonPlayerCharacter tag="Skeleton">
+			<CharacterClass tag="BaseEnemy"/>
+			<Properties>
+				<Property name="Name" value="Szkielet" type="string"/>
+				<Property name="Description" value="Przywrócony do życia przez magię szkielet człowieka" type="string"/>
+				<Property name="Behaviour" value="Hostile" type="string"/>
+				<Property name="Damage" value="1d4" type="string" />
+			</Properties>
+		</NonPlayerCharacter>
+	</Characters>
+
+	<!-- Definicje struktur -->
+	<Structures>
+	    <Structure tag="AncientChest">
+        <Properties>
+            <Property name="Name" value="Stara skrzynia" type="string"/>
+            <Property name="Description" value="Zamknięta skrzynia, pokryta starożytnymi symbolami." type="string"/>
+            <Property name="Interactable" value="true" type="bool"/>
+            <Property name="OnInteract" value="GiveItem" type="string"/>
+			<Property name="TriggerEvent" value="FinalBattle" type="string"/>
+        </Properties>
+        <Items>
+            <Item tag="OldKey"/>
+        </Items>
+		</Structure>
+		<Structure tag="Gate">
+			<Properties>
+				<Property name="Name" value="Stara brama" type="string"/>
+				<Property name="Description" value="Potężne kamienne drzwi prowadzące do krypty." type="string"/>
+			</Properties>
+		</Structure>
+		<Structure tag="CursedAltar">
+			<Properties>
+				<Property name="Name" value="Przeklęty Ołtarz" type="string"/>
+				<Property name="Description" value="Starożytny ołtarz emanujący złowrogą aurą." type="string"/>
+				<Property name="Interactable" value="true" type="bool"/>
+				<Property name="OnInteract" value="note" type="string"/>
+				<Property name="TriggerEvent" value="FinalBattle" type="string"/>
+			</Properties>
+		</Structure>
+		<Structure tag="Battlefield">
+			<Properties>
+				<Property name="Name" value="Pobojowisko" type="string"/>
+				<Property name="Description" value="Opuszczone miejsce walki pełne starych szczątków i zniszczonego sprzętu." type="string"/>
+				<Property name="Interactable" value="true" type="bool"/>
+				<Property name="OnInteract" value="GiveItem" type="string"/>
+			</Properties>
+			<Items>
+				<Item tag="Shield"/>
+			</Items>
+		</Structure>
+	</Structures>
+
+	<!-- Definicje lokacji -->
+	<Locations>
+		<Location tag="Village">
+			<Properties>
+				<Property name="Name" value="Zapomniana Wioska" type="string"/>
+				<Property name="Description" value="Prawie opustoszałe wioska na skraju Ciemnego Lasu." type="string"/>
+			</Properties>
+		</Location>
+		<Location tag="ForestEntry">
+			<Properties>
+				<Property name="Name" value="Wejście do lasu" type="string"/>
+				<Property name="Description" value="Ścieżka biegnąca w głąb lasu" type="string"/>
+			</Properties>
+		</Location>
+		<Location tag="DarkForest">
+			<Properties>
+				<Property name="Name" value="Ciemny Las" type="string"/>
+				<Property name="Description" value="Gęsty, tajemniczy las pełen niebezpieczeństw." type="string"/>
+			</Properties>
+		</Location>
+		<Location tag="AncientRuins">
+			<Properties>
+				<Property name="Name" value="Ruiny Starej Świątyni" type="string"/>
+				<Property name="Description" value="Stare ruiny kryjące mroczną tajemnicę." type="string"/>
+			</Properties>
+		</Location>
+		<Location tag="OldGate">
+			<Properties>
+				<Property name="Name" value="Drzwi krypty" type="string"/>
+				<Property name="Description" value="Znajdujące się wśród lasu kamienne drzwi będące wejściem do krypty" type="string"/>
+			</Properties>
+		</Location>
+		<Location tag="Altar">
+			<Properties>
+				<Property name="Name" value="Przeklęty ołtarz" type="string"/>
+				<Property name="Description" value="Przeklęty ołtarz" type="string"/>
+			</Properties>
+		</Location>
+	</Locations>
+
+	<!-- Definicja scenariusza -->
+	<Scenarios>
+	<Scenario tag="CursedProphecy" name="Mroczna klątwa">
+		<StartText>Wioskę spowija strach. Mówi się, że w mrocznym lesie czai się zło, ludzie opowiadają o straych ruinach wokół których powstają umarli. Pomóż rozwikłać tę tajemnicę. Możesz zaczynać.</StartText>
+		<StartLocation locationTag="Village"/>
+		<Locations>
+			<Location tag="Village">
+				<Characters>
+					<Character tag="VillageElder"/>
+				</Characters>
+				<ConnectedLocations>
+					<Location tag="ForestEntry" direction="N"/>
+				</ConnectedLocations>
+			</Location>
+			<Location tag="ForestEntry">
+				<ConnectedLocations>
+					<Location tag="Village" direction="S"/>
+					<Location tag="DarkForest" direction="N"/>
+					<Location tag="OldGate" direction="E"/>
+				</ConnectedLocations>
+			</Location>
+			<Location tag="DarkForest">
+				<Characters>
+					<Character tag="Wolf"/>
+				</Characters>
+				<ConnectedLocations>
+					<Location tag="ForestEntry" direction="S"/>
+					<Location tag="AncientRuins" direction="E"/>
+					<Location tag="OldCamp" direction="W"/>
+				</ConnectedLocations>
+			</Location>
+			<Location tag="OldGate">
+				<ConnectedLocations>
+					<Location tag="AncientRuins" direction="N"/>
+					<Location tag="ForestEntry" direction="W"/>
+				</ConnectedLocations>
+			</Location>
+			<Location tag="AncientRuins">
+				<Characters>
+					<Character tag="Skeleton"/>
+				</Characters>
+				<Structures>
+					<Structure tag="CryptDoor"/>
+				</Structures>
+				<ConnectedLocations>
+					<Location tag="OldGate" direction="S"/>
+					<Location tag="DarkForest" direction="W"/>
+				</ConnectedLocations>
+			</Location>
+			<Location tag="Altar">
+				<Characters>
+					<Character tag="GhostGuardian"/>
+				</Characters>
+				<ConnectedLocations>
+					<Location tag="OldGate" direction="E"/>
+				</ConnectedLocations>
+			</Location>
+		</Locations>
+	</Scenario>
+	</Scenarios>
+</ResFile>
+
