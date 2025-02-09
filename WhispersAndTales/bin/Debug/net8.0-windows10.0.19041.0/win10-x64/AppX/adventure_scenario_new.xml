@@ -1,0 +1,146 @@
+<!-- W komentarzach zawarłem krótkie tłumaczenia poszczególnych elementów-->
+<!-- -->
+
+<ResFile>
+	<Events>
+        <Event tag="FoundKey">
+            <Properties>
+                <Property name="Name" value="Znalezienie klucza" type="string"/>
+                <Property name="Description" value="Klucz do krypty został odnaleziony." type="string"/>
+            </Properties>
+        </Event>
+        <Event tag="OpenedCrypt">
+            <Properties>
+                <Property name="Name" value="Otwarcie krypty" type="string"/>
+                <Property name="Description" value="Starożytna krypta została otwarta." type="string"/>
+            </Properties>
+        </Event>
+        <Event tag="FinalBattle">
+            <Properties>
+                <Property name="Name" value="Ostateczne starcie" type="string"/>
+                <Property name="Description" value="Zmierz się z Upiornym Strażnikiem, by zdjąć klątwę." type="string"/>
+            </Properties>
+        </Event>
+    </Events>
+
+    <!-- Definicje przedmiotów -->
+    <Items>
+        <Item tag="OldKey">
+            <Properties>
+                <Property name="Name" value="Stary klucz" type="string"/>
+                <Property name="Description" value="Zardzewiały klucz do starożytnej krypty." type="string"/>
+                <Property name="CanPickUp" value="true" type="bool"/>
+            </Properties>
+        </Item>
+        <Item tag="CursedSword">
+            <Properties>
+                <Property name="Name" value="Zaklęty Miecz" type="string"/>
+                <Property name="Description" value="Starożytna broń o niezwykłej mocy." type="string"/>
+                <Property name="Damage" value="2d6" type="string"/>
+                <Property name="CanPickUp" value="true" type="bool"/>
+            </Properties>
+        </Item>
+    </Items>
+
+    <!-- Definicje postaci -->
+    <Characters>
+        <NonPlayerCharacter tag="VillageElder">
+            <Properties>
+                <Property name="Name" value="Sołtys Edgar" type="string"/>
+                <Property name="Description" value="Starszy mężczyzna, który prosi o pomoc w rozwiązaniu tajemnicy." type="string"/>
+                <Property name="Behaviour" value="Neutral" type="string"/>
+            </Properties>
+        </NonPlayerCharacter>
+        <NonPlayerCharacter tag="GhostGuardian">
+            <Properties>
+                <Property name="Name" value="Upiorny Strażnik" type="string"/>
+                <Property name="Description" value="Pradawny duch strzegący tajemnicy krypty." type="string"/>
+                <Property name="Behaviour" value="Hostile" type="string"/>
+            </Properties>
+        </NonPlayerCharacter>
+    </Characters>
+
+    <!-- Definicje struktur (obiektów w świecie gry) -->
+    <Structures>
+        <Structure tag="AncientChest">
+            <Properties>
+                <Property name="Name" value="Stara skrzynia" type="string"/>
+                <Property name="Description" value="Zamknięta skrzynia, pokryta starożytnymi symbolami." type="string"/>
+                <Property name="Interactable" value="true" type="bool"/>
+                <Property name="OnInteract" value="DropItem" type="string"/>
+            </Properties>
+            <Items>
+                <Item tag="OldKey"/>
+            </Items>
+        </Structure>
+        <Structure tag="CryptDoor">
+            <Properties>
+                <Property name="Name" value="Wejście do krypty" type="string"/>
+                <Property name="Description" value="Potężne kamienne drzwi prowadzące do podziemi." type="string"/>
+            </Properties>
+        </Structure>
+    </Structures>
+
+    <!-- Definicje lokacji -->
+    <Locations>
+        <Location tag="ForgottenVillage">
+            <Properties>
+                <Property name="Name" value="Zapomniana Wioska" type="string"/>
+                <Property name="Description" value="Opuszczona wioska na skraju Ciemnego Lasu." type="string"/>
+                <Property name="IsStartLocation" value="true" type="bool"/>
+            </Properties>
+        </Location>
+        <Location tag="DarkForest">
+            <Properties>
+                <Property name="Name" value="Ciemny Las" type="string"/>
+                <Property name="Description" value="Gęsty, tajemniczy las pełen niebezpieczeństw." type="string"/>
+            </Properties>
+        </Location>
+        <Location tag="AncientRuins">
+            <Properties>
+                <Property name="Name" value="Ruiny Świątyni" type="string"/>
+                <Property name="Description" value="Stare ruiny kryjące mroczną tajemnicę." type="string"/>
+            </Properties>
+        </Location>
+    </Locations>
+
+    <!-- Definicja scenariusza i połączenia obiektów -->
+    <Scenario tag="CursedProphecy" name="Mroczna Przepowiednia" description="Odkryj tajemnicę klątwy nawiedzającej Zapomnianą Wioskę.">
+        <StartLocation locationTag="ForgottenVillage"/>
+        <Events>
+            <Event tag="FoundKey"/>
+            <Event tag="OpenedCrypt"/>
+            <Event tag="FinalBattle"/>
+        </Events>
+        <Locations>
+            <Location tag="ForgottenVillage">
+                <Structures>
+                    <Structure tag="AncientChest"/>
+                </Structures>
+                <Characters>
+                    <Character tag="VillageElder"/>
+                </Characters>
+                <ConnectedLocations>
+                    <Location tag="DarkForest"/>
+                </ConnectedLocations>
+            </Location>
+            <Location tag="DarkForest">
+                <Characters>
+                    <Character tag="GhostGuardian"/>
+                </Characters>
+                <ConnectedLocations>
+                    <Location tag="AncientRuins"/>
+                </ConnectedLocations>
+            </Location>
+            <Location tag="AncientRuins">
+                <Structures>
+                    <Structure tag="CryptDoor"/>
+                </Structures>
+                <TriggerEvent>
+                    <Event tag="FinalBattle"/>
+                </TriggerEvent>
+            </Location>
+        </Locations>
+    </Scenario>
+</ResFile>
+

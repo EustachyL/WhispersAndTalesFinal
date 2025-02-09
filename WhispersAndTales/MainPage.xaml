@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="WhispersAndTales.MainPage"
+             BackgroundColor="{AppThemeBinding Light={x:StaticResource LightColor}, Dark={x:StaticResource DarkColor}}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <!-- Definiuj kolory HEX jako zasoby -->
+            <Color x:Key="LightColor">#FFFFFF</Color>
+            <!-- Biały -->
+            <Color x:Key="DarkColor">#1F1F1F</Color>
+            <!-- Czarny -->
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ScrollView IsVisible="False">
+        <VerticalStackLayout
+            Padding="30,0"
+            Spacing="25">
+
+            <Label
+                Text="Whispers And Tales"
+                Style="{StaticResource Headline}"
+                SemanticProperties.HeadingLevel="Level1" />
+            <Button Text="testuj rozpoznaj mowę" IsVisible="False"  Command="{Binding ListenCommand}" />
+            <Label
+                Text="{Binding RecognitionText}"
+                FontSize="18"
+                HorizontalOptions="Center" />
+            <Button Text="wstrzymaj" IsVisible="False" Command="{Binding ListenCancelCommand}" />
+
+            <Button
+                x:Name="CounterBtn"
+                Text="Log" 
+                SemanticProperties.Hint="Counts the number of times you click"
+                Clicked="OnCounterClicked"
+                HorizontalOptions="Fill" />
+            <ScrollView>
+                <VerticalStackLayout Padding="10">
+                    <Label x:Name="TextDisplay"
+                   FontSize="14"
+                    Text="Log:"
+                   TextColor="Black"
+                   LineBreakMode="WordWrap"
+                   VerticalOptions="Start"
+                   HorizontalOptions="FillAndExpand" />
+                </VerticalStackLayout>
+            </ScrollView>
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

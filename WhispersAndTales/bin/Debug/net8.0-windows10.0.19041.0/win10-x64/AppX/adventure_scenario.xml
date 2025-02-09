@@ -1,0 +1,258 @@
+<!-- W komentarzach zawarłem krótkie tłumaczenia poszczególnych elementów-->
+<!-- -->
+
+<ResFile>
+	<!-- Przykładowe obiekty są umieszczone w kolejności w której dany typ obiektu jest ładowane do gry-->
+	<Attributes> <!-- Podstawowe atrybuty postaci -->
+		<Attribute tag="Strength"><!-- Tag musi być unikalnym atrybutem, jest używany do łączenia różnych klas, type wyznacza funkcje którą będzie wykonywać ta akcja  -->
+			<Properties><!-- Prawie każda klasa zawiera słownik właściwości, mogą one zawierać dowolny obsługiwany typ-->
+				<Property name="Name" value="Siła" type="string" />
+				<Property name="Description" value="Określa fizyczną moc i zdolność do noszenia przedmiotów." type="string" />
+				<Property name="DefaultValue" value="1" type="int" /><!-- Wartość domyślna modyfikowane przez inne klasy -->
+			</Properties>
+		</Attribute>
+		<Attribute tag="Dexterity">
+			<Properties>
+				<Property name="Name" value="Zręczność" type="string" />
+				<Property name="Description" value="Wpływa na zwinność, refleksy i równowagę." type="string" />
+				<Property name="Value" value="1" type="int" />
+			</Properties>
+		</Attribute>
+		<Attribute tag="Constitution">
+			<Properties>
+				<Property name="Name" value="Kondycja" type="string" />
+				<Property name="Description" value="Określa zdrowie i wytrzymałość." type="string" />
+				<Property name="Value" value="1" type="int" />
+			</Properties>
+		</Attribute>
+		<Attribute tag="Intelligence">
+			<Properties>
+				<Property name="Name" value="Inteligencja" type="string" />
+				<Property name="Description" value="Reprezentuje zdolności logiczne i pamięć." type="string" />
+				<Property name="Value" value="1" type="int" />
+			</Properties>
+		</Attribute>
+		<Attribute tag="Wisdom">
+			<Properties>
+				<Property name="Name" value="Mądrość" type="string" />
+				<Property name="Description" value="Odwzorowuje percepcję i intuicję." type="string" />
+				<Property name="Value" value="1" type="int" />
+			</Properties>
+		</Attribute>
+		<Attribute tag="Charisma">
+			<Properties>
+				<Property name="Name" value="Charyzma" type="string" />
+				<Property name="Description" value="Wpływa na interakcje społeczne i zdolności przywódcze." type="string" />
+				<Property name="Value" value="1" type="int" />
+			</Properties>
+		</Attribute>
+	</Attributes>
+	<GameActions><!-- GameAction to akcja wykonywana przez kogoś na jakiś cel, ma zaimplementowane kilka metod które są dobierane do wywoływanej delegaty przy tworzeniu-->
+		<GameAction tag="PickUpItem" type="PickUpTarget"> 
+			<Properties> 
+				<Property name="Description" value="Spróbuje podnieść przedmiot." type="string" />
+			</Properties>
+			<Conditions><!-- warunki które musi spełnić cel lub źródło-->
+				<Condition type="TargetHasPropertyValue" propertyName="CanPickUp" value="true"/>
+			</Conditions>	
+		</GameAction>
+		<GameAction tag="MeleeAttack" type="MeleeAttack"> 
+			<Properties> 
+				<Property name="Description" value="Wykonaj Atak." type="string" />
+			</Properties>
+			<Conditions>
+				<Condition type="SourceIsCharacter"/>
+			</Conditions>
+		</GameAction>
+		<GameAction tag="Dropitem" type="Dropitem"> 
+			<Properties> 
+				<Property name="Description" value="Porzuć przedmiot." type="string" />
+			</Properties>
+			<Conditions>
+				<Condition type="TargetHasPropertyValue" propertyName="CanBeDroped" value="true"/>
+				<Condition type="SourceIsCharacter"/>
+			</Conditions>
+		</GameAction>
+		<GameAction tag="RollforValue" type="Roll"> 
+			<Properties> 
+				<Property name="Description" value="Rzut kością." type="string" />
+			</Properties>
+			<Conditions>
+				<Condition type="SourceIsCharacter"/>
+			</Conditions>
+		</GameAction>
+	</GameActions>
+	<!-- Planuje dodać opcjonalne warunki do Properties w akcjach ale jeszcze tego nie rozgryzłem-->
+	
+	<!-- Item to po prostu przedmiot, na razie nie rozdzieliłem w kodzie zwykłych przedmiotów od ekwipunku, od jednorazowego użytku itd-->
+	<Items>
+		<Item tag="Weapon_sword" type="Weapon"><!-- typ broni już jest przygotowany na później-->
+			<Properties>
+				<Property name="Name" value="Miecz jednoręczny" type="string" />
+				<Property name="Description" value="Ostry miecz do walki wręcz." type="string" />
+				<Property name="Damage" value="1d6" type="string" />
+				<Property name="CanPickUp" value="true" type="bool" /><!-- warunek używany przez akcje podnoszenia-->
+				<Property name="CanBeDroped" value="true" type="bool" />
+				<Property name="RequiredAtributeTagToEquip" value="Strength" type="tag" /><!-- warunek wymagany do użycia-->
+				<Property name="RequiredAtributeToEquip" value="5" type="int" />
+			</Properties>
+			<Actions><!-- Posiadanie przedmiotu pozwala (lub nie) na wykonanie jakiś akcji-->
+				<GameAction tag="MeleeAttack" type="allow"/>
+			</Actions>
+		</Item>
+	</Items>
+	<Modifiers><!-- modyfikatory zmieniają właściwości obiektów na które są nałożone, w zależności od typu inna funkcja podobnie jak GameAction-->
+		<Modifier tag="StrengthBoost" type="Additive">
+			<Properties>
+				<Property name="Name" value="Bonus do siły" type="string" />
+				<Property name="Description" value="Zwiększa siłę postaci o 2." type="string" />
+				<Property name="EffectedPropertyName" value="Strength" type="string" />
+				<Property name="EffectValue" value="2" type="int">
+				</Property>
+			</Properties>
+		</Modifier>
+	</Modifiers>	
+	<CharacterClasses><!-- klasa postaci, wszystkie postacie nie tylko gracza potrzebują mieć klassę-->
+		<CharacterClass tag="Warrior">
+			<Properties>
+				<Property name="Name" value="Wojownik" type="string" />
+				<Property name="Description" value="Zręczny wojownik, mistrz broni i walki." type="string" />
+				<Property name="MinHitpoints" value="1" type="int" />
+				<Property name="IsPlayable" value="true" type="bool" /><!-- klasa jest dostępna dla gracza -->
+			</Properties>
+			<Inventory><!-- tu można dać startowe przedmioty-->
+				<Item tag="Weapon_sword"/>
+			</Inventory>
+			<Attributes><!-- nie precyzyzowane tutaj atrybuty są ciągle tworzne wedle domyślnych wartości-->
+				<Attribute tag="Strength" type="fixed" value="6"/><!-- wartość stała-->
+				<Attribute tag="Constitution" type="roll" value="2k6"/> <!-- wymusi rzut(y) kością podczas tworzenia-->
+			</Attributes>
+			<Actions><!-- Tutaj zastanawiam się czy nie dodać dodatkowej klasy "ability" zamiast bezpośrednio actions-->
+					<GameAction tag="MeleeAttack" type="allow"/>
+			</Actions>
+		</CharacterClass>
+		<CharacterClass tag="Robber">
+			<Properties>
+				<Property name="Name" value="Rabuś" type="string" />
+				<Property name="Description" value="Rabuś, nic specjalnego" type="string" />
+				<Property name="MinHitpoints" value="1" type="int" />
+				<Property name="IsPlayable" value="false" type="bool" />
+			</Properties>
+			<Attributes>
+			</Attributes>
+			<Actions>
+					<GameAction tag="MeleeAttack" type="allow"/>
+			</Actions>
+		</CharacterClass>
+	</CharacterClasses>
+	<Characters>
+		<NonPlayerCharacter tag="SimpleRobber"> <!-- Postać gracza będzie tworzona w kreatorze i na razie nie przewiduje żeby definiować ją w plikach-->
+			<CharacterClass tag="Robber"/>
+			<Properties>
+				<Property name="Name" value="Zwykły rabuś" type="string" />
+				<Property name="Description" value="Zwykły rabuś" type="string" />
+				<Property name="Behaviour" value="Hostile" type="string" />
+			</Properties>
+			<Inventory><!-- można dodać dodatkowy ekwipunek-->
+			</Inventory>
+			<Actions><!-- akcje i modyfiaktory są przekładane z klasy, mogą być natomiast nadpisane tutaj-->
+			</Actions>
+			<Modifiers>
+			</Modifiers>
+		</NonPlayerCharacter>
+	</Characters>
+	
+	<!-- Scenariusz jest takim planem rozgrywki, zawiera zestaw wydarzeń, lokacji i zawartych w nich struktur-->
+	<!-- Daje tu prosty przykład z jednym wydarzeniem, 3-ma lokacjami i 2 strukturami i wrogiem-->
+	<Scenario tag="MAZE" name="Podróż przez labirynt" description="Przygoda by przejść przez prosty labirynt">
+	<!-- Wydarzenia to obiekty które wykonują jakieś akcje po konkretnym warunku, najnowsza dodana przeze mnie klasa więc jeszcze nie skończona 
+	tutaj użyte tylko powiadomić o zakończeniu gry.-->
+		<Events>	
+			<Event tag="ReachedEnd"  >
+				<Properties>
+					<Property name="Name" value="Dotarłeś do końca" type="string" />
+					<Property name="Description" value="Dotarłeś do końca labiryntu" type="string" />
+				</Properties>
+			</Event>
+		</Events>
+		<Structures><!-- Struktura to element który można znaleźć w lokacji np. skrzynia, klatka, drabina, drzwi. może zawierać przedmioty -->
+			<Structure Tag="TreasureChest">
+				<Properties>
+					<Property name="Name" value="Old Hut" type="string" />
+					<Property name="Description" value="A small hut with a thatched roof. It seems abandoned." type="string" />
+					<Property name="Interactable" value="true" type="bool" />
+					<Property name="OnInteract" value="DropItem" type="string" />
+				</Properties>
+				<Items>
+					<Item tag="Weapon_sword"/>
+				</Items>
+			</Structure>
+		</Structures>
+		<Structures>
+			<Structure Tag="Doorway">
+				<Properties>
+					<Property name="Name" value="Stare drzwi" type="string" />
+					<Property name="Description" value="Drewniane skrzypiące drzwi" type="string" />
+				</Properties>
+			</Structure>
+		</Structures>
+		<Locations>
+		<Location Tag="Entrance" Id="0"><!-- Lokacja to obszar w którym może znajdować się gracz, wrogowie, struktury, lokacje są połączone z sobą przez struktury -->
+			<Properties>
+				<Property name="Name" value="Wejście labiryntu" type="string" />
+				<Property name="Description" value="Wejście labiryntu, początek przygody." type="string" />
+				<Property name="IsStartLocation" value="true" type="bool" />
+			</Properties>
+			<Structures>
+				<Structure tag="Doorway" id="0"/><!-- lista struktur podobnie jak lokacje musi mieć identyfikator aby można było mieć kilka takich samych obiektów -->
+				<Structure tag="TreasureChest" id="1"/>
+			</Structures>
+			<TriggerEvent>
+			</TriggerEvent>
+			<ConnectedLocations>
+				<Location locationId="1" entranceStructureId="0"/>
+			</ConnectedLocations>
+		</Location>
+			<Location Tag="Hallway" Id="1">
+				<Properties>
+					<Property name="Name" value="Wejście labiryntu" type="string" />
+					<Property name="Description" value="Wejście labiryntu, początek przygody." type="string" />
+					<Property name="IsStartLocation" value="true" type="bool" />
+				</Properties>
+				<Structures>
+					<Structure tag="Doorway" id="0"/>
+					<Structure tag="Doorway" id="1"/>
+				</Structures>
+				<ConnectedLocations>
+					<Location locationId="0" entranceStructureId="0"/>
+					<Location locationId="2" entranceStructureId="1"/>
+				</ConnectedLocations>
+				<Characters>
+					<Character tag="Simple Robber" Id="0"/>
+				</Characters>
+				<TriggerEvent>
+				</TriggerEvent>
+			</Location>
+			<Location Tag="End" Id="2">
+				<Properties>
+					<Property name="Name" value="Koniec labiryntu" type="string" />
+					<Property name="Description" value="Ostatni etap labiryntu." type="string" />
+					<Property name="IsStartLocation" value="true" type="bool" />
+				</Properties>
+				<Structures>
+					<Structure tag="Doorway" id="0"/>
+				</Structures>
+				<Structures>
+					<Structure tag="Doorway" id="0"/>
+				</Structures>
+				<ConnectedLocations>
+				</ConnectedLocations>
+				<TriggerEvent>
+					<Event tag="ReachedEnd"/>
+				</TriggerEvent>
+				
+			</Location>
+		</Locations>
+	</Scenario>
+</ResFile>
+
