@@ -1,4 +1,4 @@
-# 🗣️ Whisper sAnd Tales – Głosowa Gra Fabularna
+# 🗣️ Whispers And Tales – Głosowa Gra Fabularna
 
 🎮 **Whispers and Tales** to mobilna aplikacja RPG zrealizowana jako praca inżynierska, oferująca interaktywną przygodę sterowaną całkowicie za pomocą głosu. Projekt łączy klasyczne mechaniki gier fabularnych z nowoczesnymi technologiami przetwarzania mowy, zapewniając użytkownikowi pełną immersję – bez potrzeby używania ekranu.
 
