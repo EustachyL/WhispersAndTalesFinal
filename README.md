@@ -1,30 +1,74 @@
-Whisper sAnd Tales
-Whispers And Tales to aplikacja mobilna zrealizowana w ramach pracy inżynierskiej, oferująca interaktywną grę fabularną sterowaną głosowo. Projekt łączy elementy klasycznych gier RPG z nowoczesnymi technologiami rozpoznawania i syntezy mowy, umożliwiając użytkownikowi immersyjne doświadczenie narracyjne bez potrzeby korzystania z interfejsu graficznego.
+# 🗣️ Whisper sAnd Tales – Głosowa Gra Fabularna
 
-👨‍💻 *Autor:* Eustachy Lisiński
+🎮 **Whispers and Tales** to mobilna aplikacja RPG zrealizowana jako praca inżynierska, oferująca interaktywną przygodę sterowaną całkowicie za pomocą głosu. Projekt łączy klasyczne mechaniki gier fabularnych z nowoczesnymi technologiami przetwarzania mowy, zapewniając użytkownikowi pełną immersję – bez potrzeby używania ekranu.
 
-📱 Kluczowe funkcje
-Sterowanie głosowe: Pełna obsługa gry za pomocą komend głosowych.
+---
 
-Synteza mowy (TTS): Narracja i opisy odczytywane przez lektora.
+## 👨‍💻 Autor
 
-Modularna architektura: Scenariusze gry definiowane w zewnętrznych plikach XML.
+- **Eustachy Lisiński**
+- 📍 *Politechnika Śląska – praca inżynierska*
 
-Tryb pauzy i wznowienia: Możliwość zatrzymania i kontynuowania rozgrywki głosowo.
+---
 
-System komend kontekstowych: Dostępne akcje zależne od aktualnego stanu gry.
+## 📱 Kluczowe funkcje
 
-🛠️ Wymagania systemowe
-.NET MAUI (Multi-platform App UI)
+- 🎙️ **Sterowanie głosowe**  
+  Pełna obsługa gry za pomocą komend mówionych.
 
-Android 8.0 lub nowszy
+- 🗣️ **Synteza mowy (TTS)**  
+  Narracja i opisy są odczytywane przez lektora w czasie rzeczywistym.
 
-Uprawnienia do mikrofonu i mowy
+- 🧩 **Modularna architektura**  
+  Scenariusze gry są definiowane w zewnętrznych plikach XML.
 
-Visual Studio 2022 lub nowszy z zainstalowanym MAUI
+- ⏸️ **Tryb pauzy i wznowienia**  
+  Możliwość głosowego zatrzymywania i wznawiania rozgrywki.
 
-🗂️ Plik zasobów
-Scenariusz gry oraz wszystkie elementy świata (postacie, lokacje, przedmioty, akcje) definiowane są w pliku XML (/Data/adventure_scenario.xml). Zmiana jego zawartości pozwala na modyfikację logiki rozgrywki bez ingerencji w kod źródłowy.
+- 🧠 **System komend kontekstowych**  
+  Dostępne akcje zależą od aktualnego stanu gry i lokalizacji postaci.
 
-📄 Licencja
-Projekt powstał na potrzeby pracy inżynierskiej na Politechnice Śląskiej i nie jest przeznaczony do komercyjnego rozpowszechniania. Wszelkie prawa zastrzeżone.
+---
+
+## 🛠️ Wymagania systemowe
+
+- 💻 **Platforma:** .NET MAUI (Multi-platform App UI)
+- 📱 **System operacyjny:** Android 8.0 lub nowszy
+- 🎙️ **Uprawnienia:** Dostęp do mikrofonu i systemów rozpoznawania mowy
+- 🧰 **IDE:** Visual Studio 2022 lub nowszy z obsługą .NET MAUI
+
+---
+
+## 🗂️ Pliki zasobów
+
+> Wszystkie elementy świata gry są definiowane w jednym pliku XML:
+
+📄 `/Data/adventure_scenario.xml`  
+Zawiera m.in.:
+- 🧙‍♂️ Postacie (NPC)
+- 🗺️ Lokacje
+- 🧰 Przedmioty
+- ⚔️ Akcje i wybory
+
+🔄 Zmiana zawartości pliku umożliwia tworzenie nowych scenariuszy i logiki bez edytowania kodu źródłowego.
+
+---
+
+## 🛡️ Licencja
+
+📚 Projekt został zrealizowany na potrzeby **pracy inżynierskiej na Politechnice Śląskiej**  
+🚫 Aktualnie nie jest przeznaczony do komercyjnego wykorzystania  
+© Wszelkie prawa zastrzeżone
+
+---
+
+## 💡 Pomysły na rozwój
+
+- 🌍 Generatywne scenariusze przy użyciu AI
+- 🔊 Obsługa wielu języków
+- 🎭 Personalizacja głosu lektora
+- 🎲 Integracja ze sztuczną inteligencją do dynamicznego prowadzenia narracji
+
+---
+
+✨ Dzięki za zainteresowanie projektem!  
